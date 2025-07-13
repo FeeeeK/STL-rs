@@ -134,7 +134,11 @@ where
         if self.is_empty() {
             None
         } else {
-            unsafe { (CSTL_list_const_front(self.inner.value_as_ref()) as *const T).as_ref() }
+            unsafe {
+                (CSTL_list_const_front(self.inner.value_as_ref(), <T as BaseType>::TYPE)
+                    as *const T)
+                    .as_ref()
+            }
         }
     }
 
@@ -142,8 +146,9 @@ where
         if self.is_empty() {
             None
         } else {
-            self.inner
-                .with_proxy_mut(|val, _| unsafe { (CSTL_list_front(val) as *mut T).as_mut() })
+            self.inner.with_proxy_mut(|val, _| unsafe {
+                (CSTL_list_front(val, <T as BaseType>::TYPE) as *mut T).as_mut()
+            })
         }
     }
 
@@ -151,7 +156,10 @@ where
         if self.is_empty() {
             None
         } else {
-            unsafe { (CSTL_list_const_back(self.inner.value_as_ref()) as *const T).as_ref() }
+            unsafe {
+                (CSTL_list_const_back(self.inner.value_as_ref(), <T as BaseType>::TYPE) as *const T)
+                    .as_ref()
+            }
         }
     }
 
@@ -159,8 +167,9 @@ where
         if self.is_empty() {
             None
         } else {
-            self.inner
-                .with_proxy_mut(|val, _| unsafe { (CSTL_list_back(val) as *mut T).as_mut() })
+            self.inner.with_proxy_mut(|val, _| unsafe {
+                (CSTL_list_back(val, <T as BaseType>::TYPE) as *mut T).as_mut()
+            })
         }
     }
 
