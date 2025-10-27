@@ -215,7 +215,7 @@ where
     }
 
     pub fn is_empty(&self) -> bool {
-        self.first_ptr() == self.end_ptr()
+        self.first_ptr() == self.last_ptr()
     }
 
     pub fn capacity(&self) -> usize {
@@ -295,7 +295,7 @@ where
         }
 
         unsafe {
-            let removed = self.first_ptr().offset(index as isize).read();
+            let removed = self.first_ptr().add(index).read();
 
             let pos = CSTL_vector_iterator_add(
                 CSTL_vector_begin(self.inner.value_as_ref(), <T as BaseType>::TYPE),
